@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Arduino-LiveChart")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LuisLlamas.es")]
 [assembly: AssemblyProduct("Arduino-LiveChart")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

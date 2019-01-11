@@ -12,24 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Arduino_LiveChart.ViewModels;
-using MahApps.Metro.Controls;
-using MaterialDesignThemes.Wpf;
 
-namespace Arduino_LiveChart
+namespace Arduino_LiveChart.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainView : UserControl
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
-
-            DataContext = new MainViewModel();
         }
     }
 }
-
-  
