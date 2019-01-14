@@ -1,2 +1,2 @@
-# Arduino-LiveChart
+# Arduino_LiveSerial
 WIP
