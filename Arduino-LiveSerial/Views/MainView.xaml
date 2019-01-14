@@ -1,0 +1,173 @@
+﻿<UserControl x:Class="Arduino_LiveSerial.Views.MainView"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:behaviors="clr-namespace:Arduino_LiveSerial.Behaviors"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             xmlns:local="clr-namespace:Arduino_LiveSerial.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="70*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Margin="0 0 20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Height="30" Text="{Binding SendText, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Return" Command="{Binding SendCommand}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Button Grid.Column="2" Width="80" Margin="10 0 0 0" Content="Send" Command="{Binding SendCommand}"/>
+                </Grid>
+
+                <materialDesign:Card Grid.Row="1"  Margin="0 8 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <DataGrid Grid.Row="1" Margin="0 8 0 0" RowBackground="White"  Background="White"
+                            AutoGenerateColumns="False"
+                            CanUserSortColumns="True" 
+                            CanUserAddRows="False" 
+                            ItemsSource="{Binding SendedMessages}"
+                            materialDesign:DataGridAssist.CellPadding="10 2 10 1" 
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="10 0 10 0">
+                        <i:Interaction.Behaviors>
+                            <behaviors:ScrollIntoViewBehavior/>
+                        </i:Interaction.Behaviors>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Time, StringFormat={}{0:HH:mm:ss.mmss}}" Header="Time"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                            <DataGridTextColumn Binding="{Binding Content}" Header="Sended messages"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Row="2" Margin="0 10 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <DataGrid Margin="0 8 0 0"  RowBackground="White"  Background="White"
+                                AutoGenerateColumns="False"
+                                CanUserSortColumns="True" 
+                                CanUserAddRows="False" 
+                                ItemsSource="{Binding RecievedMessages}"
+                                materialDesign:DataGridAssist.CellPadding="10 2 10 1" 
+                                materialDesign:DataGridAssist.ColumnHeaderPadding="10 0 10 0">
+                        <i:Interaction.Behaviors>
+                            <behaviors:ScrollIntoViewBehavior/>
+                        </i:Interaction.Behaviors>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Time, StringFormat={}{0:HH:mm:ss.mmss}}" Header="Time"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                            <DataGridTextColumn Binding="{Binding Content}" Header="Recieved messages"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </materialDesign:Card>
+            </Grid>
+
+            <materialDesign:Card Grid.Column="1" Margin="0 0 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                <oxy:PlotView Model="{Binding PlotModel}"/>
+            </materialDesign:Card>
+        </Grid>
+
+        <materialDesign:Card Grid.Row="1" Margin="0 10 0 0"  Height="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <DataGrid  Margin="0 4 0 0"  RowBackground="White"  Background="White"
+                                   AutoGenerateColumns="False"
+                                   CanUserSortColumns="True" 
+                                   CanUserAddRows="False" 
+                                   ItemsSource="{Binding DataSeries}"
+                                   materialDesign:DataGridAssist.CellPadding="10 2 10 1" 
+                                   materialDesign:DataGridAssist.ColumnHeaderPadding="10 0 10 0">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Open">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Button Height="16" Margin="0" Padding="0" Command="{Binding OpenSerieCommand}" Style="{StaticResource MaterialDesignFlatButton}" >
+                                        <materialDesign:PackIcon Kind="DotsHorizontal" Foreground="#777777" />
+                                </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridCheckBoxColumn Binding="{Binding IsVisible, UpdateSourceTrigger=PropertyChanged}" Header="Visible"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
+                    </DataGridCheckBoxColumn>
+
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Count}" Header="Count" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Value}" Header="Value" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Delta, StringFormat=N4}" Header="ΔValue" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding DeltaT, StringFormat={}{0:mm}:{0:ss}.{0:ffff}}" Header="Δt" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Sum, StringFormat=N4}" Header="Sum" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Slope, StringFormat=N4}" Header="Slope" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Min}" Header="Min" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding MinT, StringFormat={}{0:HH:mm:ss}}" Header="MinT" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Max}" Header="Max" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding MaxT, StringFormat={}{0:HH:mm:ss}}" Header="MaxT" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Range}" Header="Range" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding PeakMax}" Header="Peak" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding PeakT, StringFormat={}{0:HH:mm:ss}}" Header="PeakT" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Frequency, StringFormat=N4}" Header="Frequency" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                    <DataGridTextColumn Binding="{Binding Interval, StringFormat={}{0:mm}:{0:ss}.{0:ffff}}" Header="Interval" IsReadOnly="True"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

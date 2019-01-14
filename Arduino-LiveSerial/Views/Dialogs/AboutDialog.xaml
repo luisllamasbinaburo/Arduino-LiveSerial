@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Arduino_LiveSerial.Views.Dialogs.AboutDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Arduino_LiveSerial.Views.Dialogs"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+
+    <Grid Margin="16"  Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card Width="600 " Grid.Row="1"  Margin="8 2 4 16" Height="420">
+            <Grid VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Kind="GithubCircle" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <StackPanel Grid.Column="1">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" Margin="16 16 16 8">Open Source</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="16 0 16 8" Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                           VerticalAlignment="Top">This project is completely open source. If you like it and want to say thanks you could hit the GitHub Star button, tweet or post about it.</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Project page:"/>
+                        <TextBlock Margin="5">
+                        <Hyperlink Command="{Binding OpenGithubCommand}">
+                            https://github.com/luisllamasbinaburo
+                        </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <Border Grid.Row="1" Grid.ColumnSpan="2" Margin="0 10 0 0" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" Padding="8">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="16 8 16 2">Instructions</TextBlock>
+                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="32 4 16 2">Simply send data throw Serial port in format ID:VALUE or ID:VALUE@MILLIS</TextBlock>
+                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="32 16 16 2">Or use these macros to make process even easier!</TextBlock>
+                
+
+                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="16 16 16 8">ID:VALUE</TextBlock>
+                        <TextBox TextWrapping="WrapWithOverflow" IsReadOnly="True" Margin="30 0 30 0">
+                            #define SERIAL_LIVE(id, value) { Serial.print(id);  Serial.print(':');  Serial.println(value); }
+                        </TextBox>
+                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="16 16 16 8">ID:VALUE@MILLIS</TextBlock>
+                        <TextBox TextWrapping="WrapWithOverflow" IsReadOnly="True" Margin="30 0 30 0">
+                            #define SERIAL_LIVE_MILLIS(id, value, ms) { Serial.print(id);  Serial.print(':');  Serial.print(value);  Serial.print('@');  Serial.println(ms); }
+                        </TextBox>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </materialDesign:Card>
+        
+        <Button x:Name="Button" Grid.Row="2" Margin="16 0 16 0"
+                IsDefault="True" Style="{DynamicResource MaterialDesignFlatButton}"
+                HorizontalAlignment="Right"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                Content="CLOSE">
+            <Button.CommandParameter>
+                <system:Boolean>True</system:Boolean>
+            </Button.CommandParameter>
+        </Button>
+    </Grid>
+
+</UserControl>
