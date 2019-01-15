@@ -48,11 +48,11 @@
 
                         <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="16 16 16 8">ID:VALUE</TextBlock>
                         <TextBox TextWrapping="WrapWithOverflow" IsReadOnly="True" Margin="30 0 30 0">
-                            #define SERIAL_LIVE(id, value) { Serial.print(id);  Serial.print(':');  Serial.println(value); }
+                            #define LIVESERIAL(id, value) { Serial.print(id);  Serial.print(':');  Serial.println(value); }
                         </TextBox>
                         <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="16 16 16 8">ID:VALUE@MILLIS</TextBlock>
                         <TextBox TextWrapping="WrapWithOverflow" IsReadOnly="True" Margin="30 0 30 0">
-                            #define SERIAL_LIVE_MILLIS(id, value, ms) { Serial.print(id);  Serial.print(':');  Serial.print(value);  Serial.print('@');  Serial.println(ms); }
+                            #define LIVESERIAL_MILLIS(id, value) { unsigned long ms = millis(); Serial.print(id);  Serial.print(':');  Serial.print(value);  Serial.print('@');  Serial.println(ms); }
                         </TextBox>
                     </StackPanel>
                 </Border>
