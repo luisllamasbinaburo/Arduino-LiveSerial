@@ -95,10 +95,11 @@ A medida que se reciben datos de la serie, se calculan en tiempo real sus estad�
 
 ### Ver datos y exportar datos 
 ![Screehshot3](/Screenshots/ViewSeriesScreen.png)
-Podemos visualizar todos los datos recibidos, haciendo click en el icono de la serie. Se abrirá una nueva ventana que muestra los datos de la serie.
+Podemos visualizar todos los datos recibidos, haciendo click en el icono de la serie. Se abrirá una nueva ventana que muestra los datos de la serie. 
 
 Desde esta ventana podemos elegir exportar a diversos formatos, CSV, JSON, y Excel. En el caso de Excel, la hoja exportada contiene los datos y una gráfica de los valores.
 
+![Screehshot4](/Screenshots/excel-export.png)
 
 ### Opciones
 ![Screehshot2](/Screenshots/Options.png)
